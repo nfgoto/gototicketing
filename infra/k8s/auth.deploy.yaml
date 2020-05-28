@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: fgoto/gototicketing-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-clusterip-svc
+spec:
+  # default =  type: ClusterIP
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      # port exposed by the service in the cluster
+      port: 3000
+      # port inside the container
+      targetPort: 3000

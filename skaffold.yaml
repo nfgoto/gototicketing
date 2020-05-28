@@ -1,0 +1,59 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    # disable auto docker push of built images
+    push: false
+  artifacts:
+    - image: fgoto/gototicketing-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # - image: fgoto/gototicketing-comments
+    #   context: comments
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "*.js"
+    #         dest: .
+    # - image: fgoto/gototicketing-event-bus
+    #   context: event-bus
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "*.js"
+    #         dest: .
+    # - image: fgoto/gototicketing-moderation
+    #   context: moderation
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "*.js"
+    #         dest: .
+    # - image: fgoto/gototicketing-posts
+    #   context: posts
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "*.js"
+    #         dest: .
+    # - image: fgoto/gototicketing-query
+    #   context: query
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: "*.js"
+    #         dest: .
