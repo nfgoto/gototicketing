@@ -5,11 +5,13 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    # disable auto docker push of built images
-    push: false
+  # local:
+  #   # disable auto docker push of built images
+  #   push: false
+  googleCloudBuild:
+    projectId: gototicketing-dev
   artifacts:
-    - image: fgoto/gototicketing-auth
+    - image: us.gcr.io/gototicketing-dev/auth
       context: auth
       docker:
         dockerfile: Dockerfile
