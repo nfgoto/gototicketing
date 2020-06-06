@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import {
   currentUserRouter,
   signupRouter,
@@ -25,8 +26,22 @@ app.all(
 
 app.use(expressCustomErrorHandler);
 
-app.listen(PORT, () => {
+const start = async () => {
   console.log(`updatesd ${new Date().toISOString()}`);
+  try {
+    await mongoose.connect("mongodb://auth-mongo-clusterip-svc:27017/auth", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+    console.log("Auth service connected to MongoDB");
+  } catch (error) {
+    console.error(error);
+  }
 
-  console.log(`Auth service listening on port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Auth service listening on port ${PORT}`);
+  });
+};
+
+start();
