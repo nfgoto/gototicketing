@@ -29,7 +29,7 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.build = (attr: UserAttributes) => {
-  return new User();
+  return new User(attr);
 };
 
 export const User = model<UserDocument, UserModel>("User", userSchema);
