@@ -2,6 +2,7 @@ import express from "express";
 import { validationResult } from "express-validator";
 import { Errors } from "../types";
 import { User } from "../models";
+import { BadRequestError } from "../types/errors";
 
 const postSignup = async (req: express.Request, res: express.Response) => {
   const errors = validationResult(req);
@@ -15,9 +16,7 @@ const postSignup = async (req: express.Request, res: express.Response) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    return res.json({
-      message: "Email already exist",
-    });
+    throw new BadRequestError("Email already in use");
   }
 
   const user = User.build({ email, password });
