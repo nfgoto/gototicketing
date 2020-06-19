@@ -20,7 +20,9 @@ const postSignup = async (req: express.Request, res: express.Response) => {
   }
 
   const user = User.build({ email, password });
+
   await user.save();
+
   res.status(201).json({
     data: user,
   });

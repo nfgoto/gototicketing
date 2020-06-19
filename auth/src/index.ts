@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 import {
   currentUserRouter,
   signupRouter,
@@ -11,9 +12,16 @@ import { NotFoundError } from "./types/errors";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+// traffic proxied through ingress-nginx, consider that prixied traffic as trusted
+app.set("trust proxy", true);
 
 app.use(express.json());
-
+app.use(
+  cookieSession({
+    signed: false, // disable encryption of cookie content
+    secure: true, // make sure that cookies are used only on HTTPS connection
+  })
+);
 app.use([currentUserRouter, signupRouter, signinRouter, signoutRouter]);
 
 // not found handler
