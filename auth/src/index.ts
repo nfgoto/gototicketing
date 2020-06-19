@@ -35,6 +35,10 @@ app.all(
 app.use(expressCustomErrorHandler);
 
 const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error("JWT_KEY must be defined");
+  }
+
   console.log(`updatesd ${new Date().toISOString()}`);
   try {
     await mongoose.connect("mongodb://auth-mongo-clusterip-svc:27017/auth", {
