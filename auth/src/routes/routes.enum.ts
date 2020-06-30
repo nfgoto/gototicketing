@@ -1,3 +1,3 @@
 export enum ROUTES {
-  USERS = "/api/users",
+  API_ROOT_USERS = "/api/users",
 }

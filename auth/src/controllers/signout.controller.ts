@@ -1,8 +1,10 @@
 import express from "express";
 
 const postSignout = async (req: express.Request, res: express.Response) => {
+  req.session = null;
+
   res.json({
-    message: "signout working",
+    message: "signed out",
   });
 };
 

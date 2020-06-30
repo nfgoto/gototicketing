@@ -9,7 +9,7 @@ const router = Router();
  * @route POST /api/users/signout
  */
 router.post(
-  `${ROUTES.USERS}/signout`,
+  `${ROUTES.API_ROOT_USERS}/signout`,
   asyncErrorHandler(signoutHandlers.postSignout)
 );
 
